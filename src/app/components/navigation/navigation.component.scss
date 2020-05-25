@@ -1,0 +1,27 @@
+.navbar {
+  background-color: #f8f9fa;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+
+  .nav-group {
+    display: flex;
+
+    .nav-item {
+      list-style-type: none;
+      padding: 10px;
+      border-radius: 5px;
+  
+      .nav-link {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.5);
+        
+        &:hover, &.active {
+          color: rgba(0, 0, 0, 0.7);
+        }
+
+      }
+    }
+  }
+}

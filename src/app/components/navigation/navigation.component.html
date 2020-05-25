@@ -1,0 +1,10 @@
+<nav class="navbar">
+  <ul class="nav-group">
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: (router.url === '/home' || router.url === '/')}" routerLink="/home">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{active: router.url === '/favorites'}"  routerLink="/favorites">Favorites</a>
+    </li>
+  </ul>
+</nav>

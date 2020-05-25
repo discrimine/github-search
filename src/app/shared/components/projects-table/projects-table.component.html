@@ -1,0 +1,69 @@
+<div class="projects" [ngSwitch]="gridOptions.data.length">
+  <div *ngSwitchCase="0">
+    There are no projects with this title :(
+  </div>
+  <div *ngSwitchDefault>
+
+    <mat-form-field *ngIf="gridOptions.data.length">
+      <mat-label>Filter</mat-label>
+      <mat-select (selectionChange)="applyFilter($event)">
+        <mat-option value="all">All</mat-option>
+        <mat-option *ngFor="let option of filterOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-table [dataSource]="gridOptions" class="projects-grid mat-elevation-z8">
+      <ng-container matColumnDef="avatar">
+        <mat-header-cell *matHeaderCellDef> Avatar </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <img width="50px" height="50px" [src]="element.owner.avatar_url"> </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="rating">
+        <mat-header-cell *matHeaderCellDef> Rating </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.stargazers_count}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{(element.description || '').slice(0, 25) + '...'}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="link">
+        <mat-header-cell *matHeaderCellDef> Link </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a mat-button target="_blank" [href]="element.html_url">
+            {{(element.html_url || '').slice(0, 25) + '...'}}
+          </a>
+        </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="lang">
+        <mat-header-cell *matHeaderCellDef> Language </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.language}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="add">
+        <mat-header-cell *matHeaderCellDef> Add to favourite </mat-header-cell>
+        <!--TODO: Remove if project in localestorage, not if mode changed -->
+        <mat-cell *matCellDef="let element">
+          <button mat-raised-button color="primary" (click)="onAction(element)">
+            {{ mode === 'home' ? 'Add' : 'Remove' }}
+          </button>
+        </mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+      
+    </mat-paginator>
+  </div>
+</div>

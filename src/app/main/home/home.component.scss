@@ -1,0 +1,19 @@
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .search {
+    margin: 25px 0;
+    width: 300px;
+
+    .search-title {
+      text-align: center;
+    }
+
+    .search-field {
+      width: 100%;
+    }
+  }
+} 

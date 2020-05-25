@@ -1,0 +1,25 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+::ng-deep {
+  .container {
+    width: 100vw;
+    margin: 0 auto;
+  }
+  
+  .mat-snack-bar-container {
+    background-color: white;
+
+    .mat-button-wrapper {
+      color: black
+    }
+
+    &.snack-error {
+      color: #bd2130;
+    }
+    
+    &.snack-success {
+      color: #28a745;
+    }
+  }
+}
+

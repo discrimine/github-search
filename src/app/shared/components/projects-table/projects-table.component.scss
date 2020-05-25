@@ -1,0 +1,18 @@
+
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  .projects-grid {
+    width: 80vw;
+
+    .mat-cell, .mat-header-cell {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+}

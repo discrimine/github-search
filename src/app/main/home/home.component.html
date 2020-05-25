@@ -1,0 +1,15 @@
+<div class="home">
+  <div class="search">
+    <h2 class="search-title"> Find your projects </h2>
+    <form class="search-form">
+      <mat-form-field class="search-field">
+        <mat-label>Project title</mat-label>
+        <input [formControl]="search" matInput>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="results">
+    <app-projects-table (action)="addToFavourite($event)" [mode]="'home'" [projects]="projects"></app-projects-table>
+  </div>
+</div>

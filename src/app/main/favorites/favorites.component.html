@@ -1,0 +1,6 @@
+<h2 class="favorites-title"> Favorites projects </h2>
+<app-projects-table
+  mode="favorites"
+  (action)="removeFromFavourite($event)"
+  [projects]="favoriteProjects">
+</app-projects-table>
