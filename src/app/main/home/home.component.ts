@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, switchMap, takeLast, startWith, reduce } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
-import { Subscription, BehaviorSubject, combineLatest, OperatorFunction } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
 import { ProjectsResponse, Project } from 'src/app/core/interfaces/project.interface';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public search: FormControl = new FormControl('');
   public projects: BehaviorSubject<Project[]> = new BehaviorSubject([]);
-  public currentPage: BehaviorSubject<number> = new BehaviorSubject(1);
   private subscriptions = new Subscription();
 
   constructor(
@@ -25,17 +24,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formInit();
-  }
-
-  public changePage(action: string): void {
-    switch (action) {
-      case 'prev':
-        this.currentPage.next(this.currentPage.getValue() - 1)
-        break;
-      case 'next':
-        this.currentPage.next(this.currentPage.getValue() + 1)
-        break;
-    }
   }
 
   public addToFavourite(project: Project) {
@@ -62,20 +50,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   private formInit(): void {
     // TODO: use spinner
     this.subscriptions.add(
-      combineLatest(
-        this.search.valueChanges,
-        this.currentPage,
-      )
+      this.search.valueChanges
         .pipe(
           debounceTime(1000),
           // TODO: avoid any, investigate how to use FormControl as generic
-          switchMap((value: any, page: number) => {
-            return this.apiService.getProjects(value, page)
+          switchMap((value: any) => {
+            return this.apiService.getProjects(value)
           })
         )
-        .subscribe((response: ProjectsResponse) => {
-          this.projects.next(response.items);
-        })
+        .subscribe(
+          (response: ProjectsResponse) => {
+            this.projects.next(response.items);
+          },
+          (error) => {
+            console.error(error);
+          }
+        )
     )
   }
 

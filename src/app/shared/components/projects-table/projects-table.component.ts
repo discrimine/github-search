@@ -43,11 +43,11 @@ export class ProjectsTableComponent implements OnInit, OnDestroy {
     };
   }
 
-  public onAction(project: Project) {
+  public onAction(project: Project): void {
     this.action.emit(project);
   }
 
-  public applyFilter(event) {
+  public applyFilter(event): void {
     this.gridOptions.filter = event.value;
   }
 
